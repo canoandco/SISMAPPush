@@ -1,0 +1,34 @@
+<html>
+<head>
+</head>
+<body>
+
+Alias: <input id="alias" type="text"/> <br/>
+Latitude: <input id="lat" type="text"/> <br/>
+Longitude: <input id="long" type="text"/> <br/><br/>
+
+
+<input type="button" onclick="sendAlert($('#alias').val(),$('#lat').val(),$('#long').val());" value="Alerte" />
+<br/><br/>
+<div id='alert'></div>
+
+<script src="jquery.js"></script>
+<script src="socket.io.js"></script>
+<script>
+  var socket = io.connect('http://localhost:8000');
+
+  socket.on('alert', function (data) {
+      $("#alert").html("Alerte sismique envoyée par " + data.alias + 
+      	"! Latitude: " + data.lat +
+      	 ", longitude: " + data.long);    
+  });
+
+  function sendAlert(alias,lat,long) {
+  	socket.emit('alert', { 
+  		alias:alias,
+  		lat:lat,
+  		long:long});
+  }
+</script>
+</body>
+</html>
