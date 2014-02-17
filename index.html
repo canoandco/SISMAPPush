@@ -8,8 +8,17 @@ Latitude: <input id="lat" type="text"/> <br/>
 Longitude: <input id="long" type="text"/> <br/><br/>
 
 
-<input type="button" onclick="sendAlert($('#alias').val(),$('#lat').val(),$('#long').val());" value="Alerte" />
+<input type="button" onclick="sendAlert($('#alias').val(),$('#lat').val(),$('#long').val());" value="Alert" />
 <br/><br/>
+
+Latitude: <input id="currentLat" type="text"/> <br/>
+Longitude: <input id="currentLong" type="text"/> <br/><br/>
+
+
+<input type="button" onclick="updatePosition($('#currentLat').val(),$('#currentLong').val());" value="Update position" />
+<br/><br/>
+
+
 <div id='alert'></div>
 
 <script src="jquery.js"></script>
@@ -23,12 +32,25 @@ Longitude: <input id="long" type="text"/> <br/><br/>
       	 ", longitude: " + data.long);    
   });
 
+   socket.on('update position', function (data) {
+      $("#alert").html(data);    
+  });
+
   function sendAlert(alias,lat,long) {
   	socket.emit('alert', { 
   		alias:alias,
   		lat:lat,
   		long:long});
   }
+
+  function updatePosition(lat,long) {
+    socket.emit('update position', {
+        lat:lat,
+        long:long
+      }
+    );
+  }
+
 </script>
 </body>
 </html>
