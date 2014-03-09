@@ -1,7 +1,38 @@
 var io = require('socket.io').listen(8000);
+var mysql = require("mysql");
+var db = mysql.createConnection({
+	host: 'localhost', 
+	port: '3306',
+	database: 'sismapp', 
+	user : 'root', 
+	password: ''
+});
 
 
 io.sockets.on('connection', function (socket) {
+
+	var queryOnConnect = "select * from save";
+	db.query(queryOnConnect, function(err, rows) {
+		console.log("Connection");
+		if(err != null) {
+			console.log("CONNECTION ERROR: "+err);
+		}
+		else {
+			rows.forEach(function (row) {
+				var alias = row['alias'];
+				var lat = row['latitude'];
+				var long = row['longitude'];
+				
+				console.log(alias+", "+lat+", "+long);
+				socket.emit('before',{ 
+					alias:alias,
+					lat:lat,
+					long:long
+                });
+			});
+		}
+	});
+
 
   socket.on('update position', function (data) {
 

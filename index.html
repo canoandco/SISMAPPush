@@ -18,6 +18,7 @@ Longitude: <input id="currentLong" type="text"/> <br/><br/>
 <input type="button" onclick="updatePosition($('#currentLat').val(),$('#currentLong').val());" value="Update position" />
 <br/><br/>
 
+<div id="before"></div>
 
 <div id='alert'></div>
 
@@ -34,6 +35,10 @@ Longitude: <input id="currentLong" type="text"/> <br/><br/>
 
    socket.on('update position', function (data) {
       $("#alert").html(data);    
+  });
+  
+  socket.on('before', function (data) {
+	$("#before").append("<div>"+data.alias+"! Latitude: "+data.lat+", longitude: "+data.long+"</div>");
   });
 
   function sendAlert(alias,lat,long) {
