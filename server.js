@@ -18,6 +18,15 @@ io.sockets.on('connection', function (socket) {
     var lat = data.lat;
     var long = data.long;
 
+	// Sauvergarder en base de données l'alerte
+	var query = "insert into save(alias, latitude, longitude) values ('"+alias+"', '"+lat+"', '"+lon+"');";
+	console.log(query);
+	db.query(query, function(err, rows){
+		if(err != null) {
+			console.log('Erreur DB : ' + err);
+		}
+	});
+	
     io.sockets.clients().forEach(function (socket2) { 
         if(socket != socket2) {
             var userLat;
