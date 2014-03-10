@@ -37,8 +37,11 @@ Longitude: <input id="currentLong" type="text"/> <br/><br/>
       $("#alert").html(data);    
   });
   
-  socket.on('before', function (data) {
-	$("#before").append("<div>"+data.alias+"! Latitude: "+data.lat+", longitude: "+data.long+"</div>");
+  socket.on('before', function (datas) {
+	$("#before").html('');
+	datas.forEach(function (data){
+		$("#before").append("<div>"+data.alias+"! Latitude: "+data.lat+", longitude: "+data.long+"</div>");
+	});
   });
 
   function sendAlert(alias,lat,long) {

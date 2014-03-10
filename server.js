@@ -18,18 +18,18 @@ io.sockets.on('connection', function (socket) {
 			console.log("CONNECTION ERROR: "+err);
 		}
 		else {
+			var datas = new Array();
 			rows.forEach(function (row) {
-				var alias = row['alias'];
-				var lat = row['latitude'];
-				var long = row['longitude'];
-				
-				console.log(alias+", "+lat+", "+long);
-				socket.emit('before',{ 
-					alias:alias,
-					lat:lat,
-					long:long
-                });
+				var data = {
+					alias: row['alias'],
+					lat: row['latitude'],
+					long: row['longitude']
+				};
+				console.log(data);
+				datas.push(data);
 			});
+			console.log(datas);
+			socket.emit('before',datas);
 		}
 	});
 
