@@ -50,7 +50,7 @@ io.sockets.on('connection', function (socket) {
     var long = data.long;
 
 	// Sauvergarder en base de données l'alerte
-	var query = "insert into save(alias, latitude, longitude) values ('"+alias+"', '"+lat+"', '"+lon+"');";
+	var query = "insert into save(alias, latitude, longitude) values ('"+alias+"', '"+lat+"', '"+long+"');";
 	console.log(query);
 	db.query(query, function(err, rows){
 		if(err != null) {
